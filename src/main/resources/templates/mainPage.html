@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+</head>
+<body>
+    <form method="post" th:object="${newProduct}" th:action="@{/newProduct}">
+        <label for="name">Name</label>
+        <input type="text" th:field="*{name}" id="name">
+        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        <br/>
+        <br/>
+
+        <label for="quantity">Quantity</label>
+        <input type="number" th:field="*{quantity}" id="quantity">
+        <div th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></div>
+        <br/>
+        <br/>
+        <input type="submit" value="save">
+    </form>
+    <br/>
+    <br/>
+<table>
+    <tr th:each="pr:${allProducts}">
+        <td th:text="${pr.id}"></td>
+        <td th:text="${pr.name}"></td>
+        <td th:text="${pr.quantity}"></td>
+        <td>
+            <form method="post" th:action="@{/delete/{id}(id=${pr.id})}">
+                <input type="submit" value="delete">
+            </form>
+        </td>
+        <td>
+            <form method="get" th:action="@{edit/{id}(id=${pr.id})}">
+                <input type="submit" value="edit">
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
